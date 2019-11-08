@@ -1,6 +1,6 @@
 {
-  "name": "@aronruan/utils",
-  "version": "0.0.1",
+  "name": "aronruan-utils",
+  "version": "0.0.2",
   "description": "",
   "keywords": [],
   "main": "dist/utils.umd.js",
@@ -12,7 +12,7 @@
   "author": "aronruan <1041763635@qq.com>",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/githubmann/aronruan-utils.git"
   },
   "license": "MIT",
   "engines": {
