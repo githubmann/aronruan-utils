@@ -1,6 +1,6 @@
 {
-  "name": "utils",
-  "version": "0.0.0",
+  "name": "@aronruan/utils",
+  "version": "0.0.1",
   "description": "",
   "keywords": [],
   "main": "dist/utils.umd.js",
@@ -9,7 +9,7 @@
   "files": [
     "dist"
   ],
-  "author": "aronruan <aronruan@kugou.net>",
+  "author": "aronruan <1041763635@qq.com>",
   "repository": {
     "type": "git",
     "url": ""
