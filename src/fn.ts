@@ -53,7 +53,7 @@ export function twistObjectInToSortedString(
   replaceSpaceWith = ''
 ) {
   let keys = Object.keys(obj)
-  keys = keys.sort((a, b) => a - b)
+  keys = keys.sort((a, b) => (a as any) - (b as any))
   return keys.reduce((prev, cur, curIndx) => {
     let encodeValue = encodeURIComponent(obj[cur])
     encodeValue =
@@ -82,9 +82,11 @@ export function sortKeys(obj: { [key: string]: string}) {
  * @param wait 时间
  */
 export const throttle = (fn: () => void, wait: number) => {
+  // tslint:disable-next-line: one-variable-per-declaration
   let inThrottle: any, lastFn: any, lastTime: any;
   return function() {
-    const context = this as any,
+    // tslint:disable-next-line: one-variable-per-declaration
+    const context = this,
       args = arguments;
     if (!inThrottle) {
       fn.apply(context, (args as any));
@@ -106,11 +108,11 @@ export const throttle = (fn: () => void, wait: number) => {
  * @param fn
  * @param ms
  */
-export const debounce = (fn: () => void, ms = 0) => {
-  let timeoutId: any;
+export const debounce = (fn: Function, ms = 0) => {
+  let timeoutId;
   return function(...args) {
     clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => fn.apply(this, args as any), ms);
+    timeoutId = setTimeout(() => fn.apply(this, args), ms);
   };
 };
 
@@ -164,7 +166,7 @@ export const chainAsync = (fns: (next: () => void) => void) => {
  * @param start 起始值
  * @param end 结束值
  */
-export const inRange = (n: number, start: number, end = null) => {
+export const inRange = (n: number, start: number, end: number) => {
   if (end && start > end) [end, start] = [start, end]
   return end == null ? n >= 0 && n < start : n >= start && n < end
 }

@@ -4,13 +4,13 @@
  * @param partiallyVisible 是否部分可见
  */
 export const elementIsVisibleInViewport = (el: Element, partiallyVisible = false) => {
-  const { top, left, bottom, right } = el.getBoundingClientRect();
-  const { innerHeight, innerWidth } = window;
+  const { top, left, bottom, right } = el.getBoundingClientRect()
+  const { innerHeight, innerWidth } = window
   return partiallyVisible
     ? ((top > 0 && top < innerHeight) || (bottom > 0 && bottom < innerHeight)) &&
         ((left > 0 && left < innerWidth) || (right > 0 && right < innerWidth))
-    : top >= 0 && left >= 0 && bottom <= innerHeight && right <= innerWidth;
-};
+    : top >= 0 && left >= 0 && bottom <= innerHeight && right <= innerWidth
+}
 
 /**
  * ```js
@@ -20,31 +20,32 @@ export const elementIsVisibleInViewport = (el: Element, partiallyVisible = false
  * @param el 元素，默认为当前页面
  */
 export const getScrollPosition = (el = window) => ({
-  x: el.pageXOffset !== undefined ? el.pageXOffset : el.scrollLeft,
-  y: el.pageYOffset !== undefined ? el.pageYOffset : el.scrollTop
-});
+  x: el.pageXOffset !== undefined ? el.pageXOffset : (el as any).scrollLeft,
+  y: el.pageYOffset !== undefined ? el.pageYOffset : (el as any).scrollTop
+})
 
 /**
  * 复制
  */
 export const copyToClipboard = (str: string) => {
-  const el = document.createElement('textarea');
-  el.value = str;
-  el.setAttribute('readonly', '');
-  el.style.position = 'absolute';
-  el.style.left = '-9999px';
-  document.body.appendChild(el);
+  const el = document.createElement('textarea')
+  el.value = str
+  el.setAttribute('readonly', '')
+  el.style.position = 'absolute'
+  el.style.left = '-9999px'
+  document.body.appendChild(el)
   const selected =
-    (document.getSelection() as any).rangeCount > 0 ? (document.getSelection() as any).getRangeAt(0) : false;
-  el.select();
-  document.execCommand('copy');
-  document.body.removeChild(el);
+    (document.getSelection() as any).rangeCount > 0
+      ? (document.getSelection() as any).getRangeAt(0)
+      : false
+  el.select()
+  document.execCommand('copy')
+  document.body.removeChild(el)
   if (selected) {
-    (document.getSelection() as any).removeAllRanges();
-    (document.getSelection() as any).addRange(selected);
+    ;(document.getSelection() as any).removeAllRanges()
+    ;(document.getSelection() as any).addRange(selected)
   }
-};
-
+}
 
 /**
  * 获取页面隐藏属性的前缀
@@ -95,8 +96,7 @@ export function addEventToVisibility(cb: (isVisible: boolean) => void) {
  */
 export const bottomVisible = () =>
   document.documentElement.clientHeight + window.scrollY >=
-  (document.documentElement.scrollHeight || document.documentElement.clientHeight);
-
+  (document.documentElement.scrollHeight || document.documentElement.clientHeight)
 
 /**
  * smoothScroll 到某个位置
@@ -106,6 +106,6 @@ export const bottomVisible = () =>
  * ```
  */
 export const smoothScroll = (element: string) =>
-  document.querySelector(element).scrollIntoView({
+  document.querySelector(element as any).scrollIntoView({
     behavior: 'smooth'
-  });
+  })

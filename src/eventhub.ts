@@ -25,7 +25,7 @@ export const createEventHub = () => ({
     this.hub[event].push(handler);
   },
   off(event: string, handler: (data: any) => void) {
-    const i = (this.hub[event] || []).findIndex(h => h === handler);
+    const i = (this.hub[event] || []).findIndex((h: any) => h === handler);
     if (i > -1) this.hub[event].splice(i, 1);
     if (this.hub[event].length === 0) delete this.hub[event];
   }
