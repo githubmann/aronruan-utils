@@ -1,6 +1,6 @@
-export * from 'callapp-lib'
 export * from './date'
 export * from './dom'
 export * from './eventhub'
 export * from './fn'
 export * from './fn'
+export * from './regexp'
