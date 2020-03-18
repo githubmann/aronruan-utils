@@ -63,7 +63,9 @@ function getPagePropertyPrefix() {
       correctPrefix = prefix
     }
   })
-
+  if (document) {
+    correctPrefix = (document as any).visibilityState === 'visible'
+  }
   return correctPrefix || false
 }
 
