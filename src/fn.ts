@@ -65,6 +65,14 @@ export function twistObjectInToSortedString(
 }
 
 /**
+ * 比如 objToQuery({ name: 'aronruan', age: 23 })  -> name=aronruan&age=23
+ * @param obj 非嵌套对象
+ */
+export function objToQuery(obj) {
+  return Object.keys(obj).reduce((pre, cur) => pre ? `${pre}&${cur}=${encodeURIComponent(obj[cur])}` : `${cur}=${encodeURIComponent(obj[cur])}`, '')
+}
+
+/**
  * 获取 object 的排序 key
  * @param obj
  */
