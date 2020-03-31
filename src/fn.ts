@@ -1,10 +1,14 @@
 export function getQueryStr(name: string) {
-  let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
-  let r = window.location.search.substr(1).match(reg)
-  if (r != null) return r[2]
+  var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
+  var customSearch = window.location.href.match(/(\?.*)/)
+  var r = window.location.search.substr(1).match(reg)
+  if (r != null) return decodeURIComponent(r[2])
+  if (customSearch) {
+    r = customSearch[1].substr(1).match(reg)
+    if (r != null) return decodeURIComponent(r[2])
+  }
   return null
 }
-
 export const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
 /**
