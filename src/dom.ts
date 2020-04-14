@@ -87,7 +87,7 @@ export function addEventToVisibility(cb: (isVisible: boolean) => void) {
   const visibilityChangeProperty = getVisibilityChangeProperty()
   if (visibilityChangeProperty) {
     let cbWrapper = () => {
-      cb(document.hidden)
+      cb(!document.hidden)
     }
     document.addEventListener(visibilityChangeProperty, cbWrapper)
     return cbWrapper
