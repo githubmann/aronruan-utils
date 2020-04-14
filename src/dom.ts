@@ -86,11 +86,20 @@ function getVisibilityChangeProperty() {
 export function addEventToVisibility(cb: (isVisible: boolean) => void) {
   const visibilityChangeProperty = getVisibilityChangeProperty()
   if (visibilityChangeProperty) {
-    document.addEventListener(visibilityChangeProperty, () => {
-      cb(getPagePropertyPrefix() || false)
-    })
-    return
+    let cbWrapper = () => {
+      cb(document.hidden)
+    }
+    document.addEventListener(visibilityChangeProperty, cbWrapper)
+    return cbWrapper
   }
+}
+
+export function removeEventFromVisibility(cb: () => void) {
+ const visibilityChangeProperty = getVisibilityChangeProperty()
+ if (visibilityChangeProperty) {
+   document.removeEventListener(visibilityChangeProperty, cb)
+   return
+ }
 }
 
 /**
