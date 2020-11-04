@@ -8,7 +8,7 @@ export const elementIsVisibleInViewport = (el: Element, partiallyVisible = false
   const { innerHeight, innerWidth } = window
   return partiallyVisible
     ? ((top > 0 && top < innerHeight) || (bottom > 0 && bottom < innerHeight)) &&
-        ((left > 0 && left < innerWidth) || (right > 0 && right < innerWidth))
+    ((left > 0 && left < innerWidth) || (right > 0 && right < innerWidth))
     : top >= 0 && left >= 0 && bottom <= innerHeight && right <= innerWidth
 }
 
@@ -42,8 +42,8 @@ export const copyToClipboard = (str: string) => {
   document.execCommand('copy')
   document.body.removeChild(el)
   if (selected) {
-    ;(document.getSelection() as any).removeAllRanges()
-    ;(document.getSelection() as any).addRange(selected)
+    ; (document.getSelection() as any).removeAllRanges()
+      ; (document.getSelection() as any).addRange(selected)
   }
 }
 
@@ -95,11 +95,11 @@ export function addEventToVisibility(cb: (isVisible: boolean) => void) {
 }
 
 export function removeEventFromVisibility(cb: () => void) {
- const visibilityChangeProperty = getVisibilityChangeProperty()
- if (visibilityChangeProperty) {
-   document.removeEventListener(visibilityChangeProperty, cb)
-   return
- }
+  const visibilityChangeProperty = getVisibilityChangeProperty()
+  if (visibilityChangeProperty) {
+    document.removeEventListener(visibilityChangeProperty, cb)
+    return
+  }
 }
 
 /**
@@ -120,3 +120,8 @@ export const smoothScroll = (element: string) =>
   document.querySelector(element as any).scrollIntoView({
     behavior: 'smooth'
   })
+
+export const preloadImage = (src: string) => {
+  const img = new window.Image()
+  img.src = src
+}

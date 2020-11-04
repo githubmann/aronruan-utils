@@ -16,7 +16,7 @@ export const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, 
  * @param url 地址，如: https://www.google.com 或者 https://www.google.com?
  * @param params query object 参数
  */
-export const transformObjtoUrlQueryString = (url: string, params:{[key: string]: string}) => {
+export const transformObjtoUrlQueryString = (url: string, params: { [key: string]: string }) => {
   if (!params) return url
   const hasQuestionSymbol = url.slice(-1) === '?'
   const strParam = Object.keys(params).reduce((pre, cur, currentIndex) => {
@@ -52,7 +52,7 @@ export const transformObjtoUrlQueryString = (url: string, params:{[key: string]:
  * @param replaceSpaceWith
  */
 export function twistObjectInToSortedString(
-  obj: { [key: string]: string},
+  obj: { [key: string]: string },
   linkChar = '',
   replaceSpaceWith = ''
 ) {
@@ -76,12 +76,26 @@ export function objToQuery(obj) {
   return Object.keys(obj).reduce((pre, cur) => pre ? `${pre}&${cur}=${encodeURIComponent(obj[cur])}` : `${cur}=${encodeURIComponent(obj[cur])}`, '')
 }
 
+export const parseSearch = (url: string) => {
+  const [, search] = url.match(/\?(.*)/) || []
+  if (search) {
+    const matches = search.match(/(.*?)=(.*?)(&|$)/g)
+    return matches?.reduce((pre, cur) => {
+      const [, key, val] = cur.match(/(.*?)=(.*?)(&|$)/) as any
+      if (key && val) {
+        pre[key] = decodeURIComponent(val)
+      }
+      return pre
+    }, {} as any)
+  }
+}
+
 /**
  * 获取 object 的排序 key
  * @param obj
  */
-export function sortKeys(obj: { [key: string]: string}) {
-  const rt: { [key: string]: string} = {}
+export function sortKeys(obj: { [key: string]: string }) {
+  const rt: { [key: string]: string } = {}
   const sortedKeys = Object.keys(obj).sort()
   sortedKeys.forEach(key => {
     rt[key] = obj[key]
@@ -96,7 +110,7 @@ export function sortKeys(obj: { [key: string]: string}) {
 export const throttle = (fn: () => void, wait: number) => {
   // tslint:disable-next-line: one-variable-per-declaration
   let inThrottle: any, lastFn: any, lastTime: any;
-  return function() {
+  return function () {
     // tslint:disable-next-line: one-variable-per-declaration
     const context = this,
       args = arguments;
@@ -106,7 +120,7 @@ export const throttle = (fn: () => void, wait: number) => {
       inThrottle = true;
     } else {
       clearTimeout(lastFn);
-      lastFn = setTimeout(function() {
+      lastFn = setTimeout(function () {
         if (Date.now() - lastTime >= wait) {
           fn.apply(context, (args as any));
           lastTime = Date.now();
@@ -122,7 +136,7 @@ export const throttle = (fn: () => void, wait: number) => {
  */
 export const debounce = (fn: Function, ms = 0) => {
   let timeoutId;
-  return function(...args) {
+  return function (...args) {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => fn.apply(this, args), ms);
   };
