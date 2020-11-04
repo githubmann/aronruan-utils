@@ -1,30 +1,42 @@
+if (!String.prototype.padStart) {
+  // eslint-disable-next-line no-extend-native
+  String.prototype.padStart = function padStart(targetLength, padString) {
+    targetLength = targetLength >> 0 //floor if number or convert non-number to 0;
+    padString = String(typeof padString !== 'undefined' ? padString : ' ')
+    if (this.length > targetLength) {
+      return String(this)
+    } else {
+      targetLength = targetLength - this.length
+      if (targetLength > padString.length) {
+        padString += padString.repeat(targetLength / padString.length) //append to original to ensure we are longer than needed
+      }
+      return padString.slice(0, targetLength) + String(this)
+    }
+  }
+}
 // remainTime 以毫秒为单位
 export const getReaminTime = (remainTime: number) => {
   if (remainTime > 0) {
     const [remainHour, remainMinute, remainSecond] = [
       remainTime % (60 * 60 * 24),
       remainTime % (60 * 60),
-      remainTime % 60,
+      remainTime % 60
     ]
     const [day, hour, minute, second] = [
       Math.floor(remainTime / (60 * 60 * 24)),
       Math.floor(remainHour / (60 * 60)),
       Math.floor(remainMinute / 60),
-      remainSecond,
+      remainSecond
     ]
     if (!day) {
-      return `${hour.toString().padStart(2, '0') + ':'}${
-        minute.toString().padStart(2, '0') + ':'
-        }${second.toString().padStart(2, '0')}`
+      return `${hour.toString().padStart(2, '0') + ':'}${minute.toString().padStart(2, '0') +
+        ':'}${second.toString().padStart(2, '0')}`
     }
-    return `${day ? day + '天' : ''}${
-      hour.toString().padStart(2, '0') + '小时'
-      }`
+    return `${day ? day + '天' : ''}${hour.toString().padStart(2, '0') + '小时'}`
   } else {
     return ''
   }
 }
-
 
 /**
  * 比如: 2.1 -> 2.10, 40 -> 40.00
@@ -35,13 +47,12 @@ export const splitInteger = (num: number) => {
   return { integer, decimal }
 }
 
-
 /**
  * const consumeQueue = new ConsumeQueue()
  * consumeQueue.push(consume_keys.CAN_DIRECT_TO_ADDR)
  */
 export class ConsumeQueue {
-  queue: Array<{ key: string, count: number, data: any }> = []
+  queue: Array<{ key: string; count: number; data: any }> = []
   push<T>(key: string, data?: T) {
     const theItem = this.queue.find(item => item.key === key)
 
@@ -49,12 +60,10 @@ export class ConsumeQueue {
       return this.queue.push({ key, count: 1, data })
     }
 
-
     theItem.count += 1
   }
 
   pop(key: string) {
-
     const theItem = this.queue.find(item => item.key === key)
     if (!theItem) return false
 
